@@ -1,0 +1,44 @@
+data:
+  exchange: "bitFlyerFX"
+  pairs:
+    - "BTC-JPY"
+  interval: "1min"
+  limit: 2000
+
+storage:
+  path: "./data/raw"
+  format: "csv"
+  rolling_days: 30         # ローカルに保持する日数 (古い分は破棄)
+  bigquery:
+    enabled: false
+    project: "hoge-fuga-hoe"
+    dataset: "crypto_dataset"
+    table: "ohlcv_data"
+    upload_frequency: "weekly"
+
+analysis:
+  interval: "15min"
+  lookback: 200
+  indicators:
+    EMA: True
+    RSI: True
+    MACD: True
+    BB: True
+  plot: True
+  output_path: "outputs/analysis"
+  signal_threshold:
+    - strong_buy: 0.8
+    - strong_sell: -0.8
+    - neutral: 0.2
+
+notify:
+  line:
+    enabled: True
+    send_graph: False
+    send_signal: True
+  local_display:
+    enabled: False
+
+schehuler:
+  fetch_frequency: "hourly"
+  analysis_after_fetch: False # データ取得後すぐに分析 & 通知をするか
