@@ -2,6 +2,8 @@ import pandas as pd
 import pandas_gbq
 from pathlib import Path
 from datetime import datetime, timedelta, timezone
+from dotenv import load_dotenv
+import os
 
 
 class StorageManager:
@@ -58,9 +60,12 @@ class StorageManager:
             "open", "high", "low", "close",
             "volumeto", "volumefrom"
         ]
+
+        load_dotenv()
+        PROJECT_ID = os.getenv("GCP_PROJECT_ID")
         pandas_gbq.to_gbq(
             upload_df[upload_columns].sort_values(by="timestamp"),
             table.replace("/", "."),
-            project_id="crypto-asset-fx",
+            project_id=PROJECT_ID,
             if_exists="append"
         )
