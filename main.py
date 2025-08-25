@@ -59,10 +59,10 @@ def main():
         )
 
         if config["storage"]["format"] == "csv":
-            filename = f"{config["data"]['exchange']}_{pair.replace('-', '_')}.csv"
+            filename = f"{config['data']['exchange']}_{pair.replace('-', '_')}.csv"
             storage.save_csv(df, filename)
         elif config["storage"]["format"] == "parquet":
-            filename = f"{config["data"]['exchange']}_{pair.replace('-', '_')}.parquet"
+            filename = f"{config['data']['exchange']}_{pair.replace('-', '_')}.parquet"
             storage.save_parquet(df, filename)
 
         df = storage.prune_old_data(df, filename, config["storage"]["rolling_days"])
@@ -81,7 +81,7 @@ def main():
     if config["notify"]["line"]["enabled"]:
         if notifier.check_trigger(df, config["notify"]):
             msg = build_signal_message(df)
-            # notifier.send_line_push(message=msg)
+            notifier.send_line_push(message=msg)
         else:
             print("Trigger is not fired")
 

@@ -1,6 +1,7 @@
 __pycache__
 
-output/
+outputs/
 data/
+bitcoin/
 
 .env

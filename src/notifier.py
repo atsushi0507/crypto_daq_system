@@ -35,7 +35,7 @@ class Notifier:
         now = datetime.now(jst)
         hour, minute = now.hour, now.minute
 
-        if (hour, minute) in [(9, 0), (18, 0)]:
+        if (hour, minute) in [(9, 00), (18, 0)]:
             return True
         
         return False
